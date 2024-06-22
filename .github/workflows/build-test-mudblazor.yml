@@ -12,3 +12,6 @@ jobs:
     with:
       check-eslint: 'MudBlazor/TScripts'
       publish-coverage: true
+  analyze:
+    name: Analyze solution
+    uses: xC0dex/Workflows/.github/workflows/template-sonar.yml@feature/sonar
