@@ -7,5 +7,5 @@ on:
 jobs:
   analyze:
     name: Analyze solution
-    uses: xC0dex/Workflows/.github/workflows/template-sonar.yml@feature/sonar
+    uses: xC0dex/Workflows/.github/workflows/template-sonar.yml@feature/sonar-scanner
     secrets: inherit
