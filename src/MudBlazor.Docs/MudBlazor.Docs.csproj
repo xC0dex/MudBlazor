@@ -44,7 +44,7 @@
 
   <!--Add Content that is being generated as part of the build cycle-->
   <!--We need to do this because the project is not yet aware of files that were generated after the build started-->
-  <Target Name="IncludeGeneratedFiles" BeforeTargets="BeforeBuild" DependsOnTargets="CompileDocs;ReadFromFile">
+  <Target Name="IncludeGeneratedFiles" BeforeTargets="BeforeBuild" DependsOnTargets="CompileDocs;ReadFromFile" Condition="$(SonarScan) == ''">
     <ItemGroup>
       <!--Include without duplication-->
       <_NewCompiledSnippets Include="Models\Snippets.generated.cs" Exclude="@(Compile)" />
