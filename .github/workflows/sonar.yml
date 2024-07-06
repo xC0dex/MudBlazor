@@ -1,0 +1,17 @@
+name: sonar
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - dev
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    name: Analyze solution
+    uses: xC0dex/Workflows/.github/workflows/template-sonar.yml@feature/sonar-scanner
+    secrets: inherit
