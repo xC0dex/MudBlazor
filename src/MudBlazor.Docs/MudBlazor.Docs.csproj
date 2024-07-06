@@ -25,7 +25,7 @@
   </PropertyGroup>
 
   <!--Execute the code generator-->
-  <Target Name="CompileDocs" BeforeTargets="BeforeBuild" Condition="$(SonarScan) == ''">
+  <Target Name="CompileDocs" BeforeTargets="BeforeBuild">
     <!--Command-line for the code generator-->
     <Message Text="Generating Docs and Tests" Importance="high" />
     <Exec Command="dotnet &quot;$(BinDocsCompiler)&quot;" Condition="Exists('$(BinDocsCompiler)')" />
@@ -44,11 +44,11 @@
 
   <!--Add Content that is being generated as part of the build cycle-->
   <!--We need to do this because the project is not yet aware of files that were generated after the build started-->
-  <Target Name="IncludeGeneratedFiles" BeforeTargets="BeforeBuild" DependsOnTargets="CompileDocs;ReadFromFile" Condition="$(SonarScan) == ''">
+  <Target Name="IncludeGeneratedFiles" BeforeTargets="BeforeBuild" DependsOnTargets="CompileDocs;ReadFromFile">
     <ItemGroup>
       <!--Include without duplication-->
       <_NewCompiledSnippets Include="Models\Snippets.generated.cs" Exclude="@(Compile)" />
-      <_NewCompiledDocsStrings Include="Models\Generated\ApiDocumentation.generated.cs" Exclude="@(Compile)" />
+      <_NewCompiledDocsStrings Include="Models\DocStrings.generated.cs" Exclude="@(Compile)" />
       <Compile Include="@(_NewCompiledSnippets)" />
       <Compile Include="@(_NewCompiledDocsStrings)" />
       <EmbeddedResource Include="@(NewExampleCodeToBuild)" Condition="@(NewExampleCodeToBuild-&gt;Count()) != 0" />
@@ -73,7 +73,7 @@
       <FilesToClean Include="./Pages/**/*Example_DialogCode.*" />
       <FilesToClean Include="./NewFilesToBuild.txt" />
       <FilesToClean Include="./Models/Snippets.generated.cs" />
-      <FilesToClean Include="./Models/Generated/ApiDocumentation.generated.cs" />
+      <FilesToClean Include="./Models/DocStrings.generated.cs" />
       <FilesToClean Include="./wwwroot/MudBlazorDocs.css" />
       <FilesToClean Include="./wwwroot/MudBlazorDocs.min.css" />
     </ItemGroup>
